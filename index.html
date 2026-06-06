@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Klaro — Tutor adaptativo para tu examen de admisión universitaria">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Klaro">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/main.css">
+  <title>Klaro — Tutor de Admisiones</title>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- TOAST INSIGNIA -->
+  <div class="toast-insignia" id="toast-insignia" aria-live="polite"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 0: LOADING
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen active" id="screen-loading" aria-label="Cargando">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+      <div class="klaro-mark" style="animation:pulse 1.5s ease infinite;">K</div>
+      <p style="color:var(--text-3);font-size:14px;">Cargando Klaro...</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 1: AUTH (Login / Registro)
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-auth" aria-label="Autenticación">
+
+    <div class="auth-wrap">
+
+      <div class="auth-hero">
+        <div class="klaro-mark">K</div>
+        <h1 class="auth-titulo-marca">Klaro</h1>
+        <p class="auth-sub">Tu tutor adaptativo para el examen de admisión</p>
+      </div>
+
+      <div class="auth-card">
+        <h2 class="auth-titulo" id="auth-titulo">Bienvenido/a</h2>
+
+        <!-- Error global -->
+        <div class="auth-error" id="auth-error" role="alert" style="display:none"></div>
+
+        <!-- FORMULARIO LOGIN -->
+        <div id="form-login" style="display:flex;flex-direction:column;gap:12px;">
+          <div class="input-wrap">
+            <label class="input-label" for="input-login-email">Email</label>
+            <input class="input-field" type="email" id="input-login-email"
+              placeholder="tu@email.com" autocomplete="email">
+          </div>
+          <div class="input-wrap">
+            <label class="input-label" for="input-login-password">Contraseña</label>
+            <input class="input-field" type="password" id="input-login-password"
+              placeholder="••••••••" autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary" id="btn-login">Entrar</button>
+          <p class="auth-link-txt">¿No tienes cuenta?
+            <a href="#" id="link-ir-registro" class="auth-link">Regístrate gratis</a>
+          </p>
+        </div>
+
+        <!-- FORMULARIO REGISTRO -->
+        <div id="form-registro" style="display:none;flex-direction:column;gap:12px;">
+          <div class="input-wrap">
+            <label class="input-label" for="input-reg-email">Email</label>
+            <input class="input-field" type="email" id="input-reg-email"
+              placeholder="tu@email.com" autocomplete="email">
+          </div>
+          <div class="input-wrap">
+            <label class="input-label" for="input-reg-password">Contraseña</label>
+            <input class="input-field" type="password" id="input-reg-password"
+              placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          </div>
+          <div class="input-wrap">
+            <label class="input-label" for="input-reg-confirm">Confirmar contraseña</label>
+            <input class="input-field" type="password" id="input-reg-confirm"
+              placeholder="Repite la contraseña" autocomplete="new-password">
+          </div>
+          <button class="btn btn-primary" id="btn-registro">Crear cuenta</button>
+          <p class="auth-link-txt">¿Ya tienes cuenta?
+            <a href="#" id="link-ir-login" class="auth-link">Iniciar sesión</a>
+          </p>
+        </div>
+
+      </div>
+
+      <p class="auth-disclaimer">Gratis · Sin publicidad · Tu progreso guardado en la nube</p>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 2: ONBOARDING (solo primera vez)
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-onboarding" aria-label="Bienvenida">
+
+    <div class="onboarding-hero">
+      <div class="klaro-mark" aria-hidden="true">K</div>
+      <h1 class="onboarding-title">Prepárate para<br><span>entrar.</span></h1>
+      <p class="onboarding-sub">
+        Tu tutor adaptativo para el examen de admisión a Nutrición y Dietética
+        en la Escuela Nacional del Deporte.
+      </p>
+      <div class="features-grid" aria-label="Características">
+        <div class="feature-chip"><span class="feat-icon" aria-hidden="true">🧠</span>Rutas adaptativas</div>
+        <div class="feature-chip"><span class="feat-icon" aria-hidden="true">🔥</span>Racha diaria</div>
+        <div class="feature-chip"><span class="feat-icon" aria-hidden="true">⚡</span>XP y niveles</div>
+        <div class="feature-chip"><span class="feat-icon" aria-hidden="true">☁️</span>Progreso en la nube</div>
+      </div>
+    </div>
+
+    <div class="onboarding-actions">
+      <button class="btn btn-primary" id="btn-comenzar">Comenzar ahora →</button>
+      <p style="text-align:center;font-size:12px;color:var(--text-3);margin-top:8px;">
+        Tu progreso se guarda automáticamente
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 3: DASHBOARD
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-dashboard" aria-label="Inicio">
+
+    <header class="topbar">
+      <span class="topbar-logo">Klaro</span>
+      <span class="topbar-xp" aria-label="XP total">⚡ 0 XP</span>
+      <span class="topbar-racha" aria-label="Racha">🔥 0</span>
+    </header>
+
+    <div class="dash-content">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <h1 class="dash-greeting" id="dash-greeting">¡Hola!</h1>
+        <button class="btn-logout" id="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+          ↩ Salir
+        </button>
+      </div>
+      <p class="dash-sub" id="dash-sub"></p>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:20px;" id="dash-email"></p>
+
+      <!-- Nivel -->
+      <div class="nivel-card" role="region" aria-label="Nivel actual">
+        <div class="nivel-badge" id="nivel-num" aria-label="Nivel">1</div>
+        <div class="nivel-info">
+          <div class="nivel-nombre" id="nivel-nombre">Aspirante</div>
+          <div class="nivel-xp" id="nivel-xp-txt">0 / 100 XP</div>
+          <div class="progress-wrap">
+            <div class="progress-fill" id="nivel-progress" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <p class="section-title">Tu progreso</p>
+      <div class="stats-row" role="region" aria-label="Estadísticas">
+        <div class="stat-mini">
+          <div class="stat-mini-val" id="stat-respondidas" style="color:var(--violet-2)">0</div>
+          <div class="stat-mini-lbl">Preguntas</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-val" id="stat-precision" style="color:var(--green)">0%</div>
+          <div class="stat-mini-lbl">Precisión</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-val" id="stat-racha" style="color:var(--pink)">0 🔥</div>
+          <div class="stat-mini-lbl">Racha</div>
+        </div>
+      </div>
+
+      <!-- Áreas -->
+      <p class="section-title">Entrenar por área</p>
+      <div class="areas-grid" id="areas-grid" role="list" aria-label="Áreas de estudio"></div>
+
+      <!-- Sesión libre -->
+      <button class="btn btn-primary" id="btn-sesion-libre" style="margin-bottom:16px;">
+        🎯 Sesión adaptativa — todas las áreas
+      </button>
+
+      <!-- Insignias -->
+      <p class="section-title">Insignias</p>
+      <div class="insignias-scroll" id="insignias-scroll" role="list" aria-label="Insignias"></div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 4: PREGUNTA
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-quiz" aria-label="Pregunta">
+
+    <header class="topbar">
+      <span class="topbar-logo">Klaro</span>
+      <span class="topbar-xp" aria-live="polite">⚡ 0 XP</span>
+      <span class="topbar-racha">🔥 0</span>
+    </header>
+
+    <div style="height:3px;background:var(--bg-3);">
+      <div id="quiz-progress-bar"
+        style="height:100%;background:var(--violet);width:0%;transition:width 400ms ease;"></div>
+    </div>
+
+    <div class="quiz-header">
+      <span class="quiz-area-tag" id="quiz-area-tag">Área</span>
+      <span class="quiz-progress-text" id="quiz-progress-text" aria-label="Progreso">1 / 10</span>
+    </div>
+
+    <div class="quiz-body">
+      <div class="quiz-dificultad" aria-label="Dificultad">
+        <div class="dif-dot on"></div>
+        <div class="dif-dot"></div>
+        <div class="dif-dot"></div>
+      </div>
+      <p class="quiz-pregunta" id="quiz-pregunta">Cargando...</p>
+      <div class="opciones-list" id="opciones-list" role="list" aria-label="Opciones"></div>
+    </div>
+
+    <div class="feedback-panel" id="feedback-panel" role="alert" aria-live="polite">
+      <div class="feedback-header">
+        <span class="feedback-emoji" id="feedback-emoji">💡</span>
+        <span class="feedback-titulo" id="feedback-titulo"></span>
+      </div>
+      <p class="feedback-texto" id="feedback-texto"></p>
+      <p class="feedback-extra" id="feedback-extra"></p>
+      <span class="feedback-xp" id="feedback-xp" style="display:none">+0 XP</span>
+    </div>
+
+    <div class="quiz-footer">
+      <button class="btn btn-primary" id="btn-siguiente" style="display:none">
+        Siguiente pregunta →
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PANTALLA 5: RESUMEN DE SESIÓN
+  ══════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-resumen" aria-label="Resumen de sesión">
+
+    <header class="topbar">
+      <span class="topbar-logo">Klaro</span>
+      <span class="topbar-xp" aria-live="polite">⚡ 0 XP</span>
+      <span class="topbar-racha">🔥 0</span>
+    </header>
+
+    <div class="resumen-content">
+      <div class="resumen-emoji" id="resumen-emoji" aria-hidden="true">🏆</div>
+      <h2 class="resumen-titulo" id="resumen-titulo">¡Sesión completada!</h2>
+      <p class="resumen-msg" id="resumen-msg"></p>
+
+      <div class="resumen-stats" role="region" aria-label="Resultados">
+        <div class="resumen-stat">
+          <div class="resumen-stat-val" id="resumen-correctas">0</div>
+          <div class="resumen-stat-lbl">Correctas</div>
+        </div>
+        <div class="resumen-stat">
+          <div class="resumen-stat-val" id="resumen-total">0</div>
+          <div class="resumen-stat-lbl">Preguntas</div>
+        </div>
+        <div class="resumen-stat">
+          <div class="resumen-stat-val" id="resumen-pct">0%</div>
+          <div class="resumen-stat-lbl">Precisión</div>
+        </div>
+      </div>
+
+      <div class="resumen-area-debil" id="resumen-area-debil" style="display:none"></div>
+
+      <div class="resumen-actions">
+        <button class="btn btn-primary" id="btn-repetir">🔄 Otra sesión</button>
+        <button class="btn btn-secondary" id="btn-volver-inicio">← Volver al inicio</button>
+      </div>
+    </div>
+
+  </section>
+
+</div><!-- /.app -->
+
+<!-- Supabase CDN (primero) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<!-- Scripts Klaro — orden importa -->
+<script src="/js/content.js"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/gamification.js"></script>
+<script src="/js/engine.js"></script>
+<script src="/js/app.js"></script>
+
+</body>
+</html>
