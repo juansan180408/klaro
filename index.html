@@ -181,9 +181,18 @@
       <p class="section-title">Entrenar por área</p>
       <div class="areas-grid" id="areas-grid" role="list" aria-label="Áreas de estudio"></div>
 
+      <!-- Selector de nivel -->
+      <p class="section-title">Elegir nivel</p>
+      <div class="nivel-selector" id="nivel-selector" role="group" aria-label="Nivel de dificultad">
+        <button class="nivel-chip activo" data-nivel="" id="chip-todos">🎯 Adaptativo</button>
+        <button class="nivel-chip" data-nivel="suave" id="chip-suave">🟢 Suave</button>
+        <button class="nivel-chip" data-nivel="maso" id="chip-maso">🟡 Maso</button>
+        <button class="nivel-chip" data-nivel="heavy" id="chip-heavy">🔴 Heavy</button>
+      </div>
+
       <!-- Sesión libre -->
       <button class="btn btn-primary" id="btn-sesion-libre" style="margin-bottom:16px;">
-        🎯 Sesión adaptativa — todas las áreas
+        🎯 Iniciar sesión
       </button>
 
       <!-- Insignias -->
@@ -229,6 +238,7 @@
       <div class="feedback-header">
         <span class="feedback-emoji" id="feedback-emoji">💡</span>
         <span class="feedback-titulo" id="feedback-titulo"></span>
+        <span class="feedback-nivel" id="feedback-nivel"></span>
       </div>
       <p class="feedback-texto" id="feedback-texto"></p>
       <p class="feedback-extra" id="feedback-extra"></p>
