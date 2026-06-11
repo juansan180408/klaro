@@ -23,40 +23,37 @@ const Engine = (() => {
   // ── CARGA DESDE SUPABASE ──────────────────────────────────
 
   const cargarPreguntas = async (area = null, nivel = null) => {
-    if (_cache.cargadas && !area && !nivel) return _cache.preguntas;
+    // Cargar TODAS las preguntas al cache una sola vez — filtrar localmente
+    // Esto garantiza que _usadosEnSesion funcione correctamente entre preguntas
+    if (!_cache.cargadas) {
+      try {
+        const { data, error } = await sb
+          .from('preguntas')
+          .select('id, area, nivel, tema, pregunta, opciones, correcta, explicacion, xp')
+          .eq('activa', true);
 
-    try {
-      let query = sb
-        .from('preguntas')
-        .select('id, area, nivel, tema, pregunta, opciones, correcta, explicacion, xp')
-        .eq('activa', true);
+        if (error) {
+          console.error('Error cargando preguntas:', error);
+          return [];
+        }
 
-      if (area)  query = query.eq('area', area);
-      if (nivel) query = query.eq('nivel', nivel);
+        _cache.preguntas = (data || []).map(p => ({
+          ...p,
+          opciones: Array.isArray(p.opciones) ? p.opciones : JSON.parse(p.opciones)
+        }));
+        _cache.cargadas = true;
 
-      const { data, error } = await query;
-
-      if (error) {
-        console.error('Error cargando preguntas:', error);
+      } catch (e) {
+        console.error('Error cargando preguntas:', e);
         return [];
       }
-
-      const normalizadas = (data || []).map(p => ({
-        ...p,
-        opciones: Array.isArray(p.opciones) ? p.opciones : JSON.parse(p.opciones)
-      }));
-
-      if (!area && !nivel) {
-        _cache.preguntas = normalizadas;
-        _cache.cargadas  = true;
-      }
-
-      return normalizadas;
-
-    } catch (e) {
-      console.error('Error cargando preguntas:', e);
-      return [];
     }
+
+    // Filtrar localmente desde el cache completo
+    let resultado = _cache.preguntas;
+    if (area)  resultado = resultado.filter(p => p.area  === area);
+    if (nivel) resultado = resultado.filter(p => p.nivel === nivel);
+    return resultado;
   };
 
   const limpiarCache = () => {
